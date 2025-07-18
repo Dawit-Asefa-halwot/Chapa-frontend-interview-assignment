@@ -5,36 +5,51 @@ import { WalletBalance } from './components/WalletBalance';
 import { TransactionList } from './components/TransactionList';
 import { TransactionForm } from './components/TransactionForm';
 import { transactionService } from '@/shared/services/api/transactionService';
+import { userService } from '@/shared/services/api/userService';
 
 export const UserDashboard = () => {
-     const { user } = useAuth();
+     const { user, setUser } = useAuth();
      const [transactions, setTransactions] = useState([]);
      const [loading, setLoading] = useState(true);
 
      useEffect(() => {
-          const loadTransactions = async () => {
+          const loadData = async () => {
                if (user?.id) {
                     try {
-                         const data = await transactionService.getUserTransactions(user.id);
-                         setTransactions(data);
+                         const transactionsData = await transactionService.getUserTransactions(user.id);
+                         setTransactions(transactionsData);
                     } finally {
                          setLoading(false);
                     }
                }
           };
 
-          loadTransactions();
+          loadData();
      }, [user?.id]);
 
      const handleTransactionSubmit = async (transactionData) => {
-          const newTransaction = {
-               ...transactionData,
-               userId: user.id,
-               status: 'pending',
-          };
+          try {
+               const newTransaction = await transactionService.createTransaction(
+                    {
+                         ...transactionData,
+                         userId: user.id,
+                         status: 'pending',
+                    },
+                    userService // Pass userService for balance update
+               );
 
-          await transactionService.createTransaction(newTransaction);
-          setTransactions([newTransaction, ...transactions]);
+               // Update local transactions list
+               setTransactions([newTransaction, ...transactions]);
+
+               // Update auth context with new balance
+               const updatedUser = await userService.getUserById(user.id);
+               setUser(updatedUser);
+
+               return true;
+          } catch (error) {
+               console.error('Transaction failed:', error.message);
+               return false;
+          }
      };
 
      return (
@@ -45,7 +60,10 @@ export const UserDashboard = () => {
                     </div>
                     <div className="lg:col-span-2 space-y-6">
                          <TransactionList transactions={transactions} loading={loading} />
-                         <TransactionForm onSubmit={handleTransactionSubmit} />
+                         <TransactionForm
+                              onSubmit={handleTransactionSubmit}
+                              balance={user?.walletBalance || 0}
+                         />
                     </div>
                </div>
           </DashboardLayout>

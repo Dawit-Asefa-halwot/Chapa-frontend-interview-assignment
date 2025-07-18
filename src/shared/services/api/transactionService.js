@@ -13,9 +13,14 @@ class TransactionService {
                .sort((a, b) => new Date(b.date) - new Date(a.date));
      }
 
-     async createTransaction(transaction) {
+     async createTransaction(transaction, userService) {
           await new Promise(resolve => setTimeout(resolve, 800));
 
+          await userService.updateUserBalance(
+               transaction.userId,
+               transaction.amount,
+               transaction.type
+          );
           const newTransaction = {
                ...transaction,
                id: Date.now().toString(),

@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/shared/components/ui/Button';
 import { Input } from '@/shared/components/ui/Input';
 
-export const TransactionForm = ({ onSubmit }) => {
+export const TransactionForm = ({ onSubmit, balance }) => { // Added balance prop
      const [type, setType] = useState('credit');
      const [amount, setAmount] = useState('');
      const [phone, setPhone] = useState('');
      const [phoneError, setPhoneError] = useState('');
+     const [amountError, setAmountError] = useState(''); // Added state
      const [isSubmitting, setIsSubmitting] = useState(false);
      const [submitSuccess, setSubmitSuccess] = useState(false);
+
+     // Clear errors when inputs change
+     useEffect(() => {
+          setAmountError('');
+     }, [amount, type]);
 
      const validatePhone = (value) => {
           const cleanPhone = value.replace(/\D/g, '');
@@ -32,24 +38,39 @@ export const TransactionForm = ({ onSubmit }) => {
      const handleSubmit = async (e) => {
           e.preventDefault();
 
-          if (!amount || !phone || phoneError) return;
+          // Clear previous errors
+          setAmountError('');
+
+          // Validate amount
+          const amountNum = parseFloat(amount);
+          if (isNaN(amountNum)) {
+               setAmountError('Please enter a valid amount');
+               return;
+          }
+
+          // Check for sufficient funds for withdrawal
+          if (type === 'debit' && amountNum > balance) {
+               setAmountError('Insufficient funds');
+               return;
+          }
 
           setIsSubmitting(true);
           setSubmitSuccess(false);
 
           try {
-               await onSubmit({
-                    amount: parseFloat(amount),
+               const success = await onSubmit({
+                    amount: amountNum,
                     type,
                     description: `${type === 'credit' ? 'Deposit' : 'Withdraw'} via mobile money to +251${phone}`
                });
 
-               setAmount('');
-               setPhone('');
-               setPhoneError('');
-               setSubmitSuccess(true);
-
-               setTimeout(() => setSubmitSuccess(false), 3000);
+               if (success) {
+                    setAmount('');
+                    setPhone('');
+                    setPhoneError('');
+                    setSubmitSuccess(true);
+                    setTimeout(() => setSubmitSuccess(false), 3000);
+               }
           } finally {
                setIsSubmitting(false);
           }
@@ -125,6 +146,10 @@ export const TransactionForm = ({ onSubmit }) => {
                          required
                     />
 
+                    {amountError && (
+                         <p className="mt-1 text-sm text-red-600">{amountError}</p>
+                    )}
+
                     {submitSuccess && (
                          <div>
                               <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 text-green-800 px-4 py-3 rounded-xl animate-pulse">
@@ -139,7 +164,7 @@ export const TransactionForm = ({ onSubmit }) => {
                     <Button
                          type="submit"
                          loading={isSubmitting}
-                         disabled={!amount || !phone || phoneError}
+                         disabled={!amount || !phone || phoneError || !!amountError}
                          className={`w-full transform hover:scale-105 transition-all duration-200 ${type === 'credit'
                               ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
                               : 'bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700'

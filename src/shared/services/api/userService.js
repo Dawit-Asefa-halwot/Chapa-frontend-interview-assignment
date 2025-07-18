@@ -31,6 +31,26 @@ class UserService {
           return newUser;
      }
 
+     async updateUserBalance(userId, amount, type) {
+          await new Promise(resolve => setTimeout(resolve, 300));
+
+          const userIndex = mockUsers.findIndex(u => u.id === userId);
+          if (userIndex === -1) {
+               throw new Error('User not found');
+          }
+
+          const newBalance = type === 'credit'
+               ? mockUsers[userIndex].walletBalance + amount
+               : mockUsers[userIndex].walletBalance - amount;
+
+          if (type === 'debit' && newBalance < 0) {
+               throw new Error('Insufficient funds');
+          }
+
+          mockUsers[userIndex].walletBalance = newBalance;
+          return mockUsers[userIndex];
+     }
+
      async deleteUser(userId) {
           await new Promise(resolve => setTimeout(resolve, 300));
 
