@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from '../../../../shared/components/ui/Button';
-import { Input } from '../../../../shared/components/ui/Input';
+import { Button } from '@/shared/components/ui/Button';
+import { Input } from '@/shared/components/ui/Input';
 
 export const TransactionForm = ({ onSubmit }) => {
      const [type, setType] = useState('credit');
@@ -67,8 +67,8 @@ export const TransactionForm = ({ onSubmit }) => {
                                    type="button"
                                    onClick={() => setType('credit')}
                                    className={`p-4 rounded-xl border-2 transition-all duration-200 transform hover:scale-105 ${type === 'credit'
-                                             ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-400 text-green-700 shadow-lg'
-                                             : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-gray-100'
+                                        ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-400 text-green-700 shadow-lg'
+                                        : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-gray-100'
                                         }`}
                               >
                                    <span className="text-lg">➕</span>
@@ -78,8 +78,8 @@ export const TransactionForm = ({ onSubmit }) => {
                                    type="button"
                                    onClick={() => setType('debit')}
                                    className={`p-4 rounded-xl border-2 transition-all duration-200 transform hover:scale-105 ${type === 'debit'
-                                             ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-400 text-red-700 shadow-lg'
-                                             : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-gray-100'
+                                        ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-400 text-red-700 shadow-lg'
+                                        : 'bg-gray-50 border-gray-300 text-gray-700 hover:bg-gray-100'
                                         }`}
                               >
                                    <span className="text-lg">➖</span>
@@ -141,8 +141,8 @@ export const TransactionForm = ({ onSubmit }) => {
                          loading={isSubmitting}
                          disabled={!amount || !phone || phoneError}
                          className={`w-full transform hover:scale-105 transition-all duration-200 ${type === 'credit'
-                                   ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
-                                   : 'bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700'
+                              ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
+                              : 'bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700'
                               }`}
                          size="lg"
                     >

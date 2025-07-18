@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../../../shared/components/ui/Button';
+import { Button } from '@/shared/components/ui/Button';
 
 export const UserManagement = ({ users, loading, onToggleStatus }) => {
      if (loading) {

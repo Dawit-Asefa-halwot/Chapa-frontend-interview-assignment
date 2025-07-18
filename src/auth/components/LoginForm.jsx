@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../../../shared/components/ui/Button';
-import { Input } from '../../../shared/components/ui/Input';
-import { Card } from '../../../shared/components/ui/Card';
-import { Logo } from '../../../shared/components/ui/Logo';
+import { useAuth } from '.../../../hooks/useAuth';
+import { Button } from '@/shared/components/ui/Button';
+import { Input } from '@/shared/components/ui/Input';
+import { Card } from '@/shared/components/ui/Card';
+import { Logo } from '@/shared/components/ui/Logo';
 
 export const LoginForm = () => {
      const [email, setEmail] = useState('');

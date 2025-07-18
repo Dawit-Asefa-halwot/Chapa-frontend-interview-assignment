@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { DashboardLayout } from '../../../shared/components/layout/DashboardLayout';
+import { DashboardLayout } from '@/shared/components/layout/DashboardLayout';
 import { AdminDashboard } from '../admin/AdminDashboard';
 import { AdminManagement } from './components/AdminManagement';
 import { SystemStats } from './components/SystemStats';
-import { userService } from '../../../shared/services/api/userService';
+import { userService } from '@/shared/services/api/userService';
 
 export const SuperAdminDashboard = () => {
      const [admins, setAdmins] = useState([]);

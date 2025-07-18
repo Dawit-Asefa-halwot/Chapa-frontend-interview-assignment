@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { DashboardLayout } from '../../../shared/components/layout/DashboardLayout';
+import { DashboardLayout } from '@/shared/components/layout/DashboardLayout';
 import { UserManagement } from './components/UserManagement';
 import { PaymentSummary } from './components/PaymentSummary';
-import { userService } from '../../../shared/services/api/userService';
-import { transactionService } from '../../../shared/services/api/transactionService';
+import { userService } from '@/shared/services/api/userService';
+import { transactionService } from '@/shared/services/api/transactionService';
 
 export const AdminDashboard = () => {
      const [users, setUsers] = useState([]);

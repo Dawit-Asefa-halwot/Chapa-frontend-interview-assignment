@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../../../auth/hooks/useAuth';
+import { useAuth } from '@/auth/hooks/useAuth';
 import { Button } from '../ui/Button';
 import { Logo } from '../ui/Logo';
 

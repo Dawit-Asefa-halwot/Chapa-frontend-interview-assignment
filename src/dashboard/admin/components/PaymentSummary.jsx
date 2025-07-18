@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from '../../../../shared/components/ui/Card';
-import { Button } from '../../../../shared/components/ui/Button';
+import { Card } from '@/shared/components/ui/Card';
+import { Button } from '@/shared/components/ui/Button';
 
 export const PaymentSummary = ({ users, transactions }) => {
      // Helper function to format currency

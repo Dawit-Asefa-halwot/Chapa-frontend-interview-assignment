@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { DashboardLayout } from '../../../shared/components/layout/DashboardLayout';
-import { useAuth } from '../../../auth/hooks/useAuth';
+import { DashboardLayout } from '@/shared/components/layout/DashboardLayout';
+import { useAuth } from '@/auth/hooks/useAuth';
 import { WalletBalance } from './components/WalletBalance';
 import { TransactionList } from './components/TransactionList';
 import { TransactionForm } from './components/TransactionForm';
-import { transactionService } from '../../../shared/services/api/transactionService';
+import { transactionService } from '@/shared/services/api/transactionService';
 
 export const UserDashboard = () => {
      const { user } = useAuth();

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Card } from '../../../../shared/components/ui/Card';
-import { Button } from '../../../../shared/components/ui/Button';
-import { Input } from '../../../../shared/components/ui/Input';
+import { Card } from '@/shared/components/ui/Card';
+import { Button } from '@/shared/components/ui/Button';
+import { Input } from '@/shared/components/ui/Input';
 
 export const AdminManagement = ({ admins, loading, onAddAdmin, onRemoveAdmin }) => {
      const [newAdminName, setNewAdminName] = useState('');
