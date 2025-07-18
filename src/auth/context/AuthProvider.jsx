@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 import { authService } from '../services/authService';
 
 export const AuthProvider = ({ children }) => {
-     const [user, setUser] = useState(null);
+     const [user, setUser] = useState(() => {
+          // Check localStorage for existing session
+          const savedUser = localStorage.getItem('user');
+          return savedUser ? JSON.parse(savedUser) : null;
+     });
+
      const [isLoading, setIsLoading] = useState(false);
+
+     useEffect(() => {
+          // Save user to localStorage whenever it changes
+          if (user) {
+               localStorage.setItem('user', JSON.stringify(user));
+          } else {
+               localStorage.removeItem('user');
+          }
+     }, [user]);
 
      const login = async (email, password) => {
           setIsLoading(true);

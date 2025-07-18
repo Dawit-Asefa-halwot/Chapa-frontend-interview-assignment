@@ -15,7 +15,7 @@ export const DashboardPage = () => {
                return <UserDashboard />;
           case 'admin':
                return <AdminDashboard />;
-          case 'super-admin':
+          case 'super-admin': // Make sure this matches your data
                return <SuperAdminDashboard />;
           default:
                return <div>Unknown role</div>;
