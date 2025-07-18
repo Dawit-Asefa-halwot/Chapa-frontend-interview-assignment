@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.fixed-element {
+  width: 100vw;
+  /* Instead of 100% */
+  left: 0;
+}
 
 body {
   margin: 0;
@@ -10,6 +28,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.DashboardLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+/* Prevent map-like dragging */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.shaking-element {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.grid-container {
+  grid-gap: 1rem;
+  /* Use gap instead of margins */
 }
 
 @keyframes shake {

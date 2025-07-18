@@ -1,5 +1,9 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
+  corePlugins: {
+    preflight: true, // Ensure this is enabled
+  },
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -19,4 +23,6 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
+
+export default config;
